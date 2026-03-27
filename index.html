@@ -1,0 +1,344 @@
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,500;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --beige-0: #FAF7F2;
+  --beige-1: #F2EDE4;
+  --beige-2: #E8DFD0;
+  --beige-3: #D4C5AE;
+  --beige-4: #B09C83;
+  --beige-5: #7D6B56;
+  --beige-6: #4A3D2F;
+  --gold: #C4A96A;
+  --ink: #1C1712;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--beige-0); color: var(--ink); font-family: 'Raleway', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.5rem 3rem;
+  background: rgba(250,247,242,0.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--beige-2);
+}
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 400; letter-spacing: 0.14em; color: var(--beige-6); text-decoration: none; text-transform: uppercase; }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a { font-family: 'Raleway', sans-serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--beige-5); text-decoration: none; transition: color 0.3s; }
+.nav-links a:hover { color: var(--ink); }
+
+.hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding-top: 5rem; }
+.hero-text { padding: 0 3rem 0 5rem; opacity: 0; transform: translateY(30px); animation: fadeUp 1.2s ease forwards 0.3s; }
+.hero-eyebrow { font-family: 'Raleway', sans-serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem; }
+.hero-eyebrow::before { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); }
+.hero-name { font-family: 'Playfair Display', serif; font-size: clamp(4rem, 7vw, 7rem); font-weight: 400; line-height: 0.95; color: var(--beige-6); margin-bottom: 2rem; letter-spacing: 0.02em; }
+.hero-name em { font-style: italic; color: var(--beige-5); }
+.hero-tagline { font-family: 'EB Garamond', serif; font-size: 1.15rem; font-style: italic; font-weight: 400; color: var(--beige-5); line-height: 1.85; max-width: 340px; margin-bottom: 3rem; border-left: 1px solid var(--gold); padding-left: 1.5rem; border-radius: 0; }
+.hero-cta { display: inline-flex; align-items: center; gap: 0.75rem; font-family: 'Raleway', sans-serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.22em; text-transform: uppercase; color: var(--beige-6); text-decoration: none; border: 1px solid var(--beige-4); padding: 0.85rem 2rem; transition: all 0.4s; position: relative; overflow: hidden; }
+.hero-cta::before { content: ''; position: absolute; inset: 0; background: var(--beige-6); transform: translateX(-100%); transition: transform 0.4s ease; z-index: 0; }
+.hero-cta:hover::before { transform: translateX(0); }
+.hero-cta:hover { color: var(--beige-0); border-color: var(--beige-6); }
+.hero-cta span { position: relative; z-index: 1; }
+
+.hero-image-area { height: 100vh; background: var(--beige-2); position: relative; overflow: hidden; opacity: 0; animation: fadeIn 1.5s ease forwards 0.6s; }
+.hero-image-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; background: var(--beige-2); }
+.photo-icon { width: 64px; height: 64px; border: 1.5px solid var(--beige-4); border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0.6; }
+.photo-icon svg { width: 28px; height: 28px; stroke: var(--beige-5); fill: none; stroke-width: 1.2; }
+.photo-label { font-family: 'Raleway', sans-serif; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--beige-5); opacity: 0.7; }
+.hero-image-deco { position: absolute; bottom: 2rem; right: 2rem; font-family: 'Playfair Display', serif; font-size: 0.75rem; font-style: italic; color: var(--beige-4); letter-spacing: 0.08em; writing-mode: vertical-rl; }
+.scroll-indicator { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; opacity: 0; animation: fadeIn 2s ease forwards 1.8s; }
+.scroll-line { width: 1px; height: 48px; background: var(--beige-4); animation: scrollPulse 2s ease-in-out infinite; }
+.scroll-text { font-family: 'Raleway', sans-serif; font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--beige-5); }
+
+section { padding: 7rem 5rem; }
+.section-label { font-family: 'Raleway', sans-serif; font-size: 0.62rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem; }
+.section-label::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
+
+.about { display: grid; grid-template-columns: 1fr 1.4fr; gap: 6rem; align-items: start; background: var(--beige-1); }
+.about-heading { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 4vw, 3.8rem); font-weight: 400; line-height: 1.15; color: var(--beige-6); }
+.about-heading em { font-style: italic; color: var(--beige-5); }
+.about-body p { font-family: 'EB Garamond', serif; font-size: 1.12rem; font-weight: 400; line-height: 1.9; color: var(--beige-5); margin-bottom: 1.5rem; }
+.about-stats { display: flex; gap: 3rem; margin-top: 2.5rem; padding-top: 2.5rem; border-top: 1px solid var(--beige-2); }
+.stat-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 400; color: var(--beige-6); line-height: 1; margin-bottom: 0.3rem; }
+.stat-label { font-family: 'Raleway', sans-serif; font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--beige-5); }
+
+.portfolio { background: var(--beige-0); }
+.portfolio-title { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 400; color: var(--beige-6); margin-bottom: 3rem; }
+.portfolio-title em { font-style: italic; }
+.portfolio-filter { display: flex; gap: 1.5rem; margin-bottom: 3rem; flex-wrap: wrap; }
+.filter-btn { background: none; border: none; cursor: pointer; font-family: 'Raleway', sans-serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--beige-4); padding: 0.4rem 0; border-bottom: 1px solid transparent; transition: all 0.3s; }
+.filter-btn.active, .filter-btn:hover { color: var(--beige-6); border-bottom-color: var(--gold); }
+.portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+.portfolio-item { position: relative; aspect-ratio: 2/3; overflow: hidden; cursor: pointer; background: var(--beige-2); border: 0.5px solid var(--beige-1); }
+.portfolio-item:nth-child(2) { margin-top: 3rem; }
+.portfolio-item:nth-child(4) { margin-top: -2rem; }
+.portfolio-item-bg { width: 100%; height: 100%; background: linear-gradient(135deg, var(--beige-2) 0%, var(--beige-3) 60%, var(--beige-4) 100%); transition: transform 0.6s ease; display: flex; align-items: center; justify-content: center; }
+.portfolio-item:hover .portfolio-item-bg { transform: scale(1.06); }
+.portfolio-item-overlay { position: absolute; inset: 0; background: rgba(28,23,18,0); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem; transition: background 0.4s; }
+.portfolio-item:hover .portfolio-item-overlay { background: rgba(28,23,18,0.55); }
+.portfolio-item-info { transform: translateY(10px); opacity: 0; transition: all 0.4s; }
+.portfolio-item:hover .portfolio-item-info { opacity: 1; transform: translateY(0); }
+.item-type { font-family: 'Raleway', sans-serif; font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; }
+.item-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 400; color: var(--beige-0); line-height: 1.2; }
+.item-role { font-family: 'EB Garamond', serif; font-size: 0.88rem; font-style: italic; color: var(--beige-2); margin-top: 0.3rem; }
+.item-number { position: absolute; top: 1rem; right: 1rem; font-family: 'Playfair Display', serif; font-size: 0.8rem; font-style: italic; color: rgba(250,247,242,0.35); }
+
+.reel { background: var(--beige-6); text-align: center; padding: 7rem 5rem; }
+.reel .section-label { justify-content: center; }
+.reel-title { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 400; color: var(--beige-0); margin: 1rem 0 3rem; line-height: 1.1; }
+.reel-title em { font-style: italic; color: var(--beige-3); }
+.reel-placeholder { max-width: 800px; margin: 0 auto; aspect-ratio: 16/9; background: rgba(250,247,242,0.05); border: 1px solid rgba(250,247,242,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem; cursor: pointer; transition: background 0.3s; }
+.reel-placeholder:hover { background: rgba(250,247,242,0.08); }
+.play-btn { width: 72px; height: 72px; border: 1px solid rgba(196,169,106,0.6); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.4s; }
+.reel-placeholder:hover .play-btn { background: rgba(196,169,106,0.15); border-color: var(--gold); transform: scale(1.1); }
+.play-btn svg { width: 24px; height: 24px; fill: var(--gold); margin-left: 3px; }
+.reel-label { font-family: 'Raleway', sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--beige-4); }
+
+.press { background: var(--beige-1); }
+.press-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 3rem; }
+.press-item { background: var(--beige-0); padding: 2.5rem 2rem; position: relative; overflow: hidden; transition: background 0.3s; }
+.press-item:hover { background: var(--beige-2); }
+.press-quote { font-family: 'EB Garamond', serif; font-size: 1.08rem; font-style: italic; font-weight: 400; line-height: 1.85; color: var(--beige-5); margin-bottom: 1.5rem; }
+.press-source { font-family: 'Raleway', sans-serif; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--beige-4); }
+.press-deco { position: absolute; top: 1.5rem; right: 1.5rem; font-family: 'Playfair Display', serif; font-size: 4rem; color: var(--beige-2); line-height: 1; font-weight: 400; transition: color 0.3s; }
+.press-item:hover .press-deco { color: var(--beige-3); }
+
+.contact { background: var(--beige-0); display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+.contact-heading { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 4vw, 3.8rem); font-weight: 400; line-height: 1.15; color: var(--beige-6); margin-bottom: 1.5rem; }
+.contact-heading em { font-style: italic; color: var(--beige-5); }
+.contact-desc { font-family: 'EB Garamond', serif; font-size: 1.08rem; font-style: italic; color: var(--beige-5); line-height: 1.85; margin-bottom: 2.5rem; }
+.contact-email { font-family: 'Raleway', sans-serif; font-size: 1rem; font-weight: 300; color: var(--beige-6); text-decoration: none; border-bottom: 1px solid var(--gold); padding-bottom: 0.2rem; letter-spacing: 0.06em; transition: color 0.3s; display: inline-block; }
+.contact-email:hover { color: var(--beige-5); }
+.contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-group label { font-family: 'Raleway', sans-serif; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--beige-4); }
+.form-group input, .form-group textarea { background: none; border: none; border-bottom: 1px solid var(--beige-3); padding: 0.75rem 0; font-family: 'EB Garamond', serif; font-size: 1rem; font-weight: 400; color: var(--beige-6); outline: none; transition: border-color 0.3s; resize: none; border-radius: 0; }
+.form-group input::placeholder, .form-group textarea::placeholder { color: var(--beige-3); font-style: italic; }
+.form-group input:focus, .form-group textarea:focus { border-bottom-color: var(--gold); }
+.form-submit { align-self: flex-start; font-family: 'Raleway', sans-serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.22em; text-transform: uppercase; color: var(--beige-6); background: none; border: 1px solid var(--beige-4); padding: 0.85rem 2.5rem; cursor: pointer; transition: all 0.4s; position: relative; overflow: hidden; }
+.form-submit::before { content: ''; position: absolute; inset: 0; background: var(--beige-6); transform: translateX(-100%); transition: transform 0.4s ease; z-index: 0; }
+.form-submit:hover::before { transform: translateX(0); }
+.form-submit:hover { color: var(--beige-0); border-color: var(--beige-6); }
+.form-submit span { position: relative; z-index: 1; }
+
+footer { background: var(--ink); padding: 2.5rem 5rem; display: flex; justify-content: space-between; align-items: center; }
+.footer-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 400; color: var(--beige-4); letter-spacing: 0.12em; }
+.footer-copy { font-family: 'Raleway', sans-serif; font-size: 0.6rem; letter-spacing: 0.14em; color: var(--beige-5); text-transform: uppercase; }
+.footer-socials { display: flex; gap: 1.5rem; }
+.footer-socials a { font-family: 'Raleway', sans-serif; font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--beige-5); text-decoration: none; transition: color 0.3s; }
+.footer-socials a:hover { color: var(--gold); }
+
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { to { opacity: 1; } }
+@keyframes scrollPulse { 0%, 100% { opacity: 0.3; transform: scaleY(0.6); transform-origin: top; } 50% { opacity: 1; transform: scaleY(1); transform-origin: top; } }
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.9s ease, transform 0.9s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+
+<nav>
+  <a href="#" class="nav-logo">Sofia Mouly</a>
+  <ul class="nav-links">
+    <li><a href="#about">À propos</a></li>
+    <li><a href="#work">Œuvres</a></li>
+    <li><a href="#reel">Showreel</a></li>
+    <li><a href="#press">Presse</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="hero" style="padding: 0; min-height: 100vh; position: relative;">
+  <div class="hero-text">
+    <p class="hero-eyebrow">Comédienne · Théâtre & Cinéma</p>
+    <h1 class="hero-name">Sofia<br><em>Mouly</em></h1>
+    <p class="hero-tagline">Là où la précision rencontre l'émotion brute — une présence qui parle avant même les mots.</p>
+    <a href="#work" class="hero-cta"><span>Voir le portfolio</span></a>
+  </div>
+  <div class="hero-image-area">
+    <div class="hero-image-placeholder">
+      <div class="photo-icon">
+        <svg viewBox="0 0 24 24"><path d="M20 7h-3.3L15 5H9L7.3 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><circle cx="12" cy="13" r="3"/></svg>
+      </div>
+      <span class="photo-label">Photo principale</span>
+    </div>
+    <div class="hero-image-deco">Sofia Mouly · 2025</div>
+  </div>
+  <div class="scroll-indicator" style="left: 25%; bottom: 2rem;">
+    <div class="scroll-line"></div>
+    <span class="scroll-text">Défiler</span>
+  </div>
+</section>
+
+<section class="about reveal" id="about">
+  <div>
+    <p class="section-label">À propos</p>
+    <h2 class="about-heading">L'art de <em>devenir</em><br>un autre être.</h2>
+  </div>
+  <div class="about-body">
+    <p>Sofia Mouly est une comédienne basée à Paris, formée au Conservatoire National Supérieur d'Art Dramatique. Son travail traverse le théâtre, le cinéma et la télévision — porté par une présence physique instinctive et une intelligence émotionnelle rare.</p>
+    <p>Formée sous la direction de Brigitte Jaques-Wajeman, elle collabore depuis avec des metteurs en scène en France et à l'international, apportant profondeur et nuance à chacun des rôles qu'elle incarne.</p>
+    <div class="about-stats">
+      <div><div class="stat-num">12+</div><div class="stat-label">Années d'expérience</div></div>
+      <div><div class="stat-num">34</div><div class="stat-label">Productions</div></div>
+      <div><div class="stat-num">3</div><div class="stat-label">Récompenses</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="portfolio reveal" id="work">
+  <p class="section-label">Sélection</p>
+  <h2 class="portfolio-title">Théâtre, cinéma <em>& au-delà</em></h2>
+  <div class="portfolio-filter">
+    <button class="filter-btn active">Tout</button>
+    <button class="filter-btn">Théâtre</button>
+    <button class="filter-btn">Cinéma</button>
+    <button class="filter-btn">Télévision</button>
+  </div>
+  <div class="portfolio-grid">
+    <div class="portfolio-item">
+      <div class="portfolio-item-bg"></div>
+      <span class="item-number">01</span>
+      <div class="portfolio-item-overlay">
+        <div class="portfolio-item-info">
+          <p class="item-type">Théâtre · 2024</p>
+          <p class="item-title">La Cerisaie</p>
+          <p class="item-role">Mme Ranevskaya</p>
+        </div>
+      </div>
+    </div>
+    <div class="portfolio-item" style="background: var(--beige-3);">
+      <div class="portfolio-item-bg" style="background: linear-gradient(135deg, var(--beige-3) 0%, var(--beige-4) 100%);"></div>
+      <span class="item-number">02</span>
+      <div class="portfolio-item-overlay">
+        <div class="portfolio-item-info">
+          <p class="item-type">Cinéma · 2023</p>
+          <p class="item-title">Les Dernières Heures</p>
+          <p class="item-role">Claire</p>
+        </div>
+      </div>
+    </div>
+    <div class="portfolio-item" style="background: var(--beige-1);">
+      <div class="portfolio-item-bg" style="background: linear-gradient(135deg, var(--beige-1) 0%, var(--beige-2) 100%);"></div>
+      <span class="item-number">03</span>
+      <div class="portfolio-item-overlay">
+        <div class="portfolio-item-info">
+          <p class="item-type">Télévision · 2023</p>
+          <p class="item-title">Nocturnes</p>
+          <p class="item-role">Inspectrice Arnaud</p>
+        </div>
+      </div>
+    </div>
+    <div class="portfolio-item" style="background: var(--beige-4);">
+      <div class="portfolio-item-bg" style="background: linear-gradient(135deg, var(--beige-4) 0%, var(--beige-5) 100%);"></div>
+      <span class="item-number">04</span>
+      <div class="portfolio-item-overlay">
+        <div class="portfolio-item-info">
+          <p class="item-type">Théâtre · 2022</p>
+          <p class="item-title">Phèdre</p>
+          <p class="item-role">Phèdre</p>
+        </div>
+      </div>
+    </div>
+    <div class="portfolio-item">
+      <div class="portfolio-item-bg" style="background: linear-gradient(135deg, var(--beige-2) 0%, var(--beige-4) 100%);"></div>
+      <span class="item-number">05</span>
+      <div class="portfolio-item-overlay">
+        <div class="portfolio-item-info">
+          <p class="item-type">Cinéma · 2021</p>
+          <p class="item-title">L'Autre Rive</p>
+          <p class="item-role">Rôle principal</p>
+        </div>
+      </div>
+    </div>
+    <div class="portfolio-item" style="background: var(--beige-5);">
+      <div class="portfolio-item-bg" style="background: linear-gradient(135deg, var(--beige-5) 0%, var(--beige-6) 100%);"></div>
+      <span class="item-number">06</span>
+      <div class="portfolio-item-overlay">
+        <div class="portfolio-item-info">
+          <p class="item-type">Théâtre · 2020</p>
+          <p class="item-title">Électre</p>
+          <p class="item-role">Électre</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reel reveal" id="reel">
+  <p class="section-label">Showreel</p>
+  <h2 class="reel-title">Visionner le <em>showreel</em></h2>
+  <div class="reel-placeholder">
+    <div class="play-btn">
+      <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+    </div>
+    <span class="reel-label">Showreel 2025 · 3'42"</span>
+  </div>
+</section>
+
+<section class="press reveal" id="press">
+  <p class="section-label">Presse</p>
+  <div class="press-grid">
+    <div class="press-item">
+      <span class="press-deco">"</span>
+      <p class="press-quote">Une interprétation d'une intensité rare — Sofia Mouly habite la scène avec l'autorité tranquille de quelqu'un qui n'a plus rien à prouver.</p>
+      <p class="press-source">Le Monde · 2024</p>
+    </div>
+    <div class="press-item">
+      <span class="press-deco">"</span>
+      <p class="press-quote">Sa Phèdre est une leçon de dévastation maîtrisée. L'une des plus belles performances classiques de la décennie.</p>
+      <p class="press-source">Télérama · 2022</p>
+    </div>
+    <div class="press-item">
+      <span class="press-deco">"</span>
+      <p class="press-quote">Mouly apporte à l'écran une intelligence singulière — ses silences sont aussi éloquents que ses mots.</p>
+      <p class="press-source">Cahiers du Cinéma · 2023</p>
+    </div>
+  </div>
+</section>
+
+<section class="contact reveal" id="contact">
+  <div class="contact-text">
+    <p class="section-label">Contact</p>
+    <h2 class="contact-heading">Créons quelque chose <em>d'exceptionnel</em></h2>
+    <p class="contact-desc">Pour les demandes de casting, collaborations artistiques ou relations presse, n'hésitez pas à prendre contact.</p>
+    <a href="mailto:contact@sofiamouly.com" class="contact-email">contact@sofiamouly.com</a>
+  </div>
+  <div class="contact-form">
+    <div class="form-group">
+      <label>Nom</label>
+      <input type="text" placeholder="Votre nom">
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" placeholder="votre@email.com">
+    </div>
+    <div class="form-group">
+      <label>Message</label>
+      <textarea rows="4" placeholder="Parlez-moi de votre projet…"></textarea>
+    </div>
+    <button class="form-submit"><span>Envoyer le message</span></button>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-name">Sofia Mouly</span>
+  <span class="footer-copy">© 2025 Tous droits réservés</span>
+  <div class="footer-socials">
+    <a href="#">Instagram</a>
+    <a href="#">IMDb</a>
+    <a href="#">LinkedIn</a>
+  </div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+</script>
