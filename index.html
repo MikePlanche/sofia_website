@@ -274,21 +274,22 @@ footer { background: var(--ink); padding: 2.5rem 5rem; display: flex; justify-co
     <p class="contact-desc">Pour les demandes de casting, collaborations artistiques ou relations presse, n'hésitez pas à prendre contact.</p>
     <a href="mailto:mouly.sofia@gmail.com" class="contact-email">mouly.sofia@gmail.com</a>
   </div>
-  <div class="contact-form">
+  <form class="contact-form" id="contact-form" action="https://formspree.io/f/mouly.sofia@gmail.com" method="POST">
     <div class="form-group">
       <label>Nom</label>
-      <input type="text" placeholder="Votre nom">
+      <input type="text" name="name" placeholder="Votre nom" required>
     </div>
     <div class="form-group">
       <label>Email</label>
-      <input type="email" placeholder="votre@email.com">
+      <input type="email" name="email" placeholder="votre@email.com" required>
     </div>
     <div class="form-group">
       <label>Message</label>
-      <textarea rows="4" placeholder="Parlez-moi de votre projet…"></textarea>
+      <textarea rows="4" name="message" placeholder="Parlez-moi de votre projet…" required></textarea>
     </div>
-    <button class="form-submit"><span>Envoyer le message</span></button>
-  </div>
+    <button type="submit" class="form-submit"><span>Envoyer le message</span></button>
+    <p id="form-success" style="display:none; margin-top:1rem; font-family:'EB Garamond',serif; font-size:1rem; color:var(--gold); font-style:italic;">Message envoyé !</p>
+  </form>
 </section>
 
 <footer>
@@ -311,5 +312,18 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
   });
+});
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const form = this;
+  fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
+    .then(r => {
+      if (r.ok) {
+        form.reset();
+        const msg = document.getElementById('form-success');
+        msg.style.display = 'block';
+        setTimeout(() => { msg.style.display = 'none'; }, 4000);
+      }
+    });
 });
 </script>
