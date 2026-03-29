@@ -145,12 +145,13 @@ footer { background: var(--ink); padding: 2.5rem 5rem; display: flex; justify-co
 
 /* Mobile */
 @media (max-width: 768px) {
-  nav { padding: 1rem 1.5rem; flex-wrap: wrap; }
+  nav { padding: 1rem 1.5rem; flex-wrap: wrap; transform: translateY(-100%); transition: transform 0.3s ease; }
+  nav.nav-visible { transform: translateY(0); }
   .nav-logo { font-size: 1rem; }
   .nav-links { gap: 1rem; flex-wrap: wrap; }
   .nav-links a { font-size: 0.55rem; letter-spacing: 0.12em; }
 
-  .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 70px; }
+  .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 1rem; }
   .hero-text { padding: 2rem 1.5rem; text-align: center; display: flex; flex-direction: column; }
   .hero-name { font-size: clamp(2.5rem, 12vw, 4rem); order: 1; }
   .hero-eyebrow { justify-content: center; order: 2; margin-top: 1rem; margin-bottom: 1.5rem; font-size: 0.65rem; }
@@ -175,7 +176,8 @@ footer { background: var(--ink); padding: 2.5rem 5rem; display: flex; justify-co
   .reel-title { font-size: clamp(1.5rem, 5vw, 2rem); }
   .reel div[style*="max-width: 50%"] { max-width: 100% !important; }
 
-  #reels-carousel > div { min-width: 100% !important; flex-shrink: 0 !important; }
+  #reels-carousel > div { min-width: 100% !important; width: 100% !important; flex-shrink: 0 !important; padding: 0 !important; box-sizing: border-box !important; }
+  #reels-carousel { gap: 0 !important; overflow: hidden; }
 
   .carousel-btn { font-size: 1.5rem; padding: 0.5rem 0.7rem; }
 
@@ -439,6 +441,17 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 const isMobile = window.innerWidth <= 768;
+
+if (isMobile) {
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) {
+      nav.classList.add('nav-visible');
+    } else {
+      nav.classList.remove('nav-visible');
+    }
+  });
+}
 
 let carouselPos = 0;
 const carousel = document.getElementById('portfolio-carousel');
