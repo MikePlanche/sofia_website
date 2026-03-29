@@ -69,11 +69,18 @@ section { padding: 7rem 5rem; }
 .portfolio-filter { display: flex; gap: 1.5rem; margin-bottom: 3rem; flex-wrap: wrap; }
 .filter-btn { background: none; border: none; cursor: pointer; font-family: 'Raleway', sans-serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--beige-4); padding: 0.4rem 0; border-bottom: 1px solid transparent; transition: all 0.3s; }
 .filter-btn.active, .filter-btn:hover { color: var(--beige-6); border-bottom-color: var(--gold); }
-.portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
-.portfolio-item { position: relative; aspect-ratio: 2/3; overflow: hidden; cursor: pointer; background: var(--beige-2); border: 0.5px solid var(--beige-1); }
-.portfolio-item:nth-child(2) { margin-top: 3rem; }
-.portfolio-item:nth-child(4) { margin-top: -2rem; }
-.portfolio-item-bg { width: 100%; height: 100%; background: linear-gradient(135deg, var(--beige-2) 0%, var(--beige-3) 60%, var(--beige-4) 100%); transition: transform 0.6s ease; display: flex; align-items: center; justify-content: center; }
+.portfolio-carousel-wrapper { position: relative; overflow: hidden; }
+.portfolio-grid { display: flex; align-items: flex-start; gap: 4px; transition: transform 0.5s ease; }
+.portfolio-item { position: relative; min-width: calc(100% / 4); aspect-ratio: 2/3; overflow: hidden; cursor: pointer; background: var(--beige-2); border: 0.5px solid var(--beige-1); flex-shrink: 0; }
+.portfolio-item:nth-child(4n+1) { margin-top: 0; }
+.portfolio-item:nth-child(4n+2) { margin-top: 2rem; }
+.portfolio-item:nth-child(4n+3) { margin-top: -1rem; }
+.portfolio-item:nth-child(4n+4) { margin-top: 1.5rem; }
+.carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(28,23,18,0.5); border: none; color: var(--beige-1); font-size: 2rem; padding: 0.8rem 1rem; cursor: pointer; z-index: 10; transition: background 0.3s; font-family: 'Raleway', sans-serif; }
+.carousel-btn:hover { background: rgba(28,23,18,0.8); }
+.carousel-btn.prev { left: 0; }
+.carousel-btn.next { right: 0; }
+.portfolio-item-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
 .portfolio-item:hover .portfolio-item-bg { transform: scale(1.06); }
 .portfolio-item-overlay { position: absolute; inset: 0; background: rgba(28,23,18,0); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem; transition: background 0.4s; }
 .portfolio-item:hover .portfolio-item-overlay { background: rgba(28,23,18,0.55); }
@@ -164,6 +171,7 @@ footer { background: var(--ink); padding: 2.5rem 5rem; display: flex; justify-co
 <section class="about reveal" id="about">
   <div>
     <p class="section-label">À propos</p>
+    <h2 class="about-heading">CV</h2>
   </div>
   <div class="about-body" style="max-width:800px; margin:0 auto; grid-column:1/-1; text-align:center;">
 
@@ -207,7 +215,7 @@ footer { background: var(--ink); padding: 2.5rem 5rem; display: flex; justify-co
     <div class="resume-section" style="margin-top:2rem;">
       <h3 style="font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:400; color:var(--beige-6); margin-bottom:1.5rem; letter-spacing:0.05em;">Formation</h3>
       <table style="width:100%; border-collapse:collapse; font-family:'EB Garamond',serif; font-size:1rem; color:var(--beige-5); text-align:left;">
-        <tr style="border-bottom:1px solid var(--beige-2);"><td style="padding:0.6rem 0; color:var(--beige-4); white-space:nowrap;">2026</td><td style="padding-left:1.5rem;">Le jeu et le Doublage – Voice Over</td><td style="padding-left:1.5rem;">Asso Vagabond Le Magasin – 70h</td></tr>
+        <tr style="border-bottom:1px solid var(--beige-2);"><td style="padding:0.6rem 0; color:var(--beige-4); white-space:nowrap;">2026</td><td style="padding-left:1.5rem;">Le jeu et le Doublage – Voice Over</td><td style="padding-left:1.5rem;">Compagnie Vagabond Le Magasin – 70h</td></tr>
         <tr style="border-bottom:1px solid var(--beige-2);"><td style="padding:0.6rem 0; color:var(--beige-4); white-space:nowrap;">2024</td><td style="padding-left:1.5rem;">École Cours Myriade</td><td style="padding-left:1.5rem;">Théâtre, cinéma, voix off – C. Véricel & J. Fonlupt</td></tr>
         <tr style="border-bottom:1px solid var(--beige-2);"><td style="padding:0.6rem 0; color:var(--beige-4); white-space:nowrap;">2024</td><td style="padding-left:1.5rem;">Jouer pour la caméra</td><td style="padding-left:1.5rem;">Escales Buissonnières – Loïc Varraut & Hervé Brami – 70h</td></tr>
         <tr style="border-bottom:1px solid var(--beige-2);"><td style="padding:0.6rem 0; color:var(--beige-4); white-space:nowrap;">2024</td><td style="padding-left:1.5rem;">Cours particuliers d'art dramatique</td><td style="padding-left:1.5rem;">La Manœuvre – Jean-Loup Jamin – 30h</td></tr>
@@ -221,85 +229,101 @@ footer { background: var(--ink); padding: 2.5rem 5rem; display: flex; justify-co
     </div>
 
     <div style="margin-top:2.5rem;">
-      <a href="CV_SOFIA_MOULY_COMEDIENNE.pdf" download style="font-family:'Raleway',sans-serif; font-size:0.9rem; font-weight:300; color:var(--beige-6); text-decoration:none; border:1px solid var(--gold); padding:0.8rem 2rem; letter-spacing:0.15em; text-transform:uppercase; transition:all 0.3s; display:inline-block;">Télécharger le CV (PDF)</a>
+      <a href="CV_SOFIA_MOULY_COMEDIENNE.pdf" download style="font-family:'Raleway',sans-serif; font-size:0.9rem; font-weight:300; color:var(--beige-6); text-decoration:none; border:1px solid var(--gold); padding:0.8rem 2rem; letter-spacing:0.15em; text-transform:uppercase; transition:all 0.3s; display:inline-block;">Télécharger le CV</a>
     </div>
   </div>
 </section>
 
 <section class="portfolio reveal" id="work">
   <p class="section-label">Sélection</p>
-  <h2 class="portfolio-title">Théâtre, cinéma <em>& au-delà</em></h2>
-  <div class="portfolio-filter">
-    <button class="filter-btn active">Tout</button>
-    <button class="filter-btn">Théâtre</button>
-    <button class="filter-btn">Cinéma</button>
-    <button class="filter-btn">Télévision</button>
-  </div>
-  <div class="portfolio-grid">
-    <div class="portfolio-item">
-      <img src="portraits/SOFIA BOOK2063.jpg" alt="" class="portfolio-item-bg" style="width:100%;height:100%;object-fit:cover;">
-      <span class="item-number">01</span>
-      <div class="portfolio-item-overlay">
-        <div class="portfolio-item-info">
-          <p class="item-type">Théâtre · 2024</p>
-          <p class="item-title">La Cerisaie</p>
-          <p class="item-role">Mme Ranevskaya</p>
-        </div>
+  <h2 class="portfolio-title">Portfolio</h2>
+  <div class="portfolio-carousel-wrapper">
+    <button class="carousel-btn prev" onclick="moveCarousel(-1)">&#8249;</button>
+    <button class="carousel-btn next" onclick="moveCarousel(1)">&#8250;</button>
+    <div class="portfolio-grid" id="portfolio-carousel">
+      <div class="portfolio-item">
+        <img src="portraits/SOFIA BOOK2063.jpg" alt="" class="portfolio-item-bg">
+        <span class="item-number">01</span>
+        <div class="portfolio-item-overlay"><div class="portfolio-item-info">
+          <p class="item-type">Shooting · 2025</p><p class="item-title">Elisa Bron</p><p class="item-role">Photography</p>
+        </div></div>
       </div>
-    </div>
-    <div class="portfolio-item">
-      <img src="portraits/SOFIA BOOK2129.jpg" alt="" class="portfolio-item-bg" style="width:100%;height:100%;object-fit:cover;">
-      <span class="item-number">02</span>
-      <div class="portfolio-item-overlay">
-        <div class="portfolio-item-info">
-          <p class="item-type">Cinéma · 2023</p>
-          <p class="item-title">Les Dernières Heures</p>
-          <p class="item-role">Claire</p>
-        </div>
+      <div class="portfolio-item">
+        <img src="portraits/SOFIA BOOK2129.jpg" alt="" class="portfolio-item-bg">
+        <span class="item-number">02</span>
+        <div class="portfolio-item-overlay"><div class="portfolio-item-info">
+          <p class="item-type">Shooting · 2025</p><p class="item-title">Elisa Bron</p><p class="item-role">Photography</p>
+        </div></div>
       </div>
-    </div>
-    <div class="portfolio-item">
-      <img src="portraits/SOFIA BOOK2165 1.jpg" alt="" class="portfolio-item-bg" style="width:100%;height:100%;object-fit:cover;">
-      <span class="item-number">03</span>
-      <div class="portfolio-item-overlay">
-        <div class="portfolio-item-info">
-          <p class="item-type">Télévision · 2023</p>
-          <p class="item-title">Nocturnes</p>
-          <p class="item-role">Inspectrice Arnaud</p>
-        </div>
+      <div class="portfolio-item">
+        <img src="portraits/SOFIA BOOK2165 1.jpg" alt="" class="portfolio-item-bg">
+        <span class="item-number">03</span>
+        <div class="portfolio-item-overlay"><div class="portfolio-item-info">
+          <p class="item-type">Shooting · 2025</p><p class="item-title">Elisa Bron</p><p class="item-role">Photography</p>
+        </div></div>
       </div>
-    </div>
-    <div class="portfolio-item">
-      <img src="portraits/SOFIA BOOK2212.jpg" alt="" class="portfolio-item-bg" style="width:100%;height:100%;object-fit:cover;">
-      <span class="item-number">04</span>
-      <div class="portfolio-item-overlay">
-        <div class="portfolio-item-info">
-          <p class="item-type">Théâtre · 2022</p>
-          <p class="item-title">Phèdre</p>
-          <p class="item-role">Phèdre</p>
-        </div>
+      <div class="portfolio-item">
+        <img src="portraits/SOFIA BOOK2212.jpg" alt="" class="portfolio-item-bg">
+        <span class="item-number">04</span>
+        <div class="portfolio-item-overlay"><div class="portfolio-item-info">
+          <p class="item-type">Shooting · 2025</p><p class="item-title">Elisa Bron</p><p class="item-role">Photography</p>
+        </div></div>
       </div>
-    </div>
-    <div class="portfolio-item">
-      <img src="portraits/SOFIA BOOK2217.jpg" alt="" class="portfolio-item-bg" style="width:100%;height:100%;object-fit:cover;">
-      <span class="item-number">05</span>
-      <div class="portfolio-item-overlay">
-        <div class="portfolio-item-info">
-          <p class="item-type">Cinéma · 2021</p>
-          <p class="item-title">L'Autre Rive</p>
-          <p class="item-role">Rôle principal</p>
-        </div>
+      <div class="portfolio-item">
+        <img src="portraits/SOFIA BOOK2217.jpg" alt="" class="portfolio-item-bg">
+        <span class="item-number">05</span>
+        <div class="portfolio-item-overlay"><div class="portfolio-item-info">
+          <p class="item-type">Shooting · 2025</p><p class="item-title">Elisa Bron</p><p class="item-role">Photography</p>
+        </div></div>
       </div>
-    </div>
-    <div class="portfolio-item">
-      <img src="portraits/SOFIA_MOULY_00307.jpg" alt="" class="portfolio-item-bg" style="width:100%;height:100%;object-fit:cover;">
-      <span class="item-number">06</span>
-      <div class="portfolio-item-overlay">
-        <div class="portfolio-item-info">
-          <p class="item-type">Théâtre · 2020</p>
-          <p class="item-title">Électre</p>
-          <p class="item-role">Électre</p>
-        </div>
+      <div class="portfolio-item">
+        <img src="portraits/SOFIA_MOULY_00307.jpg" alt="" class="portfolio-item-bg">
+        <span class="item-number">06</span>
+        <div class="portfolio-item-overlay"><div class="portfolio-item-info">
+          <p class="item-type">Shooting · 2024</p><p class="item-title">Nicolas Nova</p><p class="item-role">Photography</p>
+        </div></div>
+      </div>
+      <div class="portfolio-item">
+        <img src="portraits/SOFIA BOOK2063.jpg" alt="" class="portfolio-item-bg">
+        <span class="item-number">07</span>
+        <div class="portfolio-item-overlay"><div class="portfolio-item-info">
+          <p class="item-type">Shooting · 2025</p><p class="item-title">Elisa Bron</p><p class="item-role">Photography</p>
+        </div></div>
+      </div>
+      <div class="portfolio-item">
+        <img src="portraits/SOFIA BOOK2129.jpg" alt="" class="portfolio-item-bg">
+        <span class="item-number">08</span>
+        <div class="portfolio-item-overlay"><div class="portfolio-item-info">
+          <p class="item-type">Shooting · 2025</p><p class="item-title">Elisa Bron</p><p class="item-role">Photography</p>
+        </div></div>
+      </div>
+      <div class="portfolio-item">
+        <img src="portraits/SOFIA BOOK2165 1.jpg" alt="" class="portfolio-item-bg">
+        <span class="item-number">09</span>
+        <div class="portfolio-item-overlay"><div class="portfolio-item-info">
+          <p class="item-type">Shooting · 2025</p><p class="item-title">Elisa Bron</p><p class="item-role">Photography</p>
+        </div></div>
+      </div>
+      <div class="portfolio-item">
+        <img src="portraits/SOFIA BOOK2212.jpg" alt="" class="portfolio-item-bg">
+        <span class="item-number">10</span>
+        <div class="portfolio-item-overlay"><div class="portfolio-item-info">
+          <p class="item-type">Shooting · 2025</p><p class="item-title">Elisa Bron</p><p class="item-role">Photography</p>
+        </div></div>
+      </div>
+      <div class="portfolio-item">
+        <img src="portraits/SOFIA BOOK2217.jpg" alt="" class="portfolio-item-bg">
+        <span class="item-number">11</span>
+        <div class="portfolio-item-overlay"><div class="portfolio-item-info">
+          <p class="item-type">Shooting · 2025</p><p class="item-title">Elisa Bron</p><p class="item-role">Photography</p>
+        </div></div>
+      </div>
+      <div class="portfolio-item">
+        <img src="portraits/SOFIA_MOULY_00307.jpg" alt="" class="portfolio-item-bg">
+        <span class="item-number">12</span>
+        <div class="portfolio-item-overlay"><div class="portfolio-item-info">
+          <p class="item-type">Shooting · 2024</p><p class="item-title">Nicolas Nova</p><p class="item-role">Photography</p>
+        </div></div>
       </div>
     </div>
   </div>
@@ -330,10 +354,15 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  });
-});
+let carouselPos = 0;
+const carousel = document.getElementById('portfolio-carousel');
+const totalItems = carousel.children.length;
+const visibleItems = 4;
+const maxPos = totalItems - visibleItems;
+
+function moveCarousel(dir) {
+  carouselPos = Math.max(0, Math.min(maxPos, carouselPos + dir));
+  const offset = (carouselPos * 100) / visibleItems;
+  carousel.style.transform = 'translateX(-' + offset + '%)';
+}
 </script>
