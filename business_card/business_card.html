@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Card - Sofia Mouly</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <style>
+    :root {
+      --beige-0: #FAF7F2;
+      --beige-1: #F2EDE4;
+      --beige-2: #E8DFD0;
+      --beige-3: #D4C5AE;
+      --beige-4: #B09C83;
+      --beige-5: #7D6B56;
+      --beige-6: #4A3D2F;
+      --gold: #C4A96A;
+      --ink: #1C1712;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #e0d8ce;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      gap: 40px;
+      padding: 40px 20px;
+      font-family: 'EB Garamond', serif;
+    }
+
+    h2.label {
+      font-family: 'Raleway', sans-serif;
+      font-weight: 400;
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--beige-5);
+      margin-bottom: -24px;
+    }
+
+    /* Standard business card: 85mm x 55mm */
+    .card {
+      width: 85mm;
+      height: 55mm;
+      border-radius: 3mm;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+      position: relative;
+    }
+
+    /* ========== FRONT ========== */
+    .card-front {
+      background: var(--beige-0);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 16px;
+    }
+
+    .card-front .name {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .card-front .divider {
+      width: 36px;
+      height: 1px;
+      background: var(--gold);
+      margin: 4px 0;
+    }
+
+    .card-front .eyebrow {
+      font-family: 'Raleway', sans-serif;
+      font-size: 7.5px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--beige-5);
+      text-align: center;
+      line-height: 1.7;
+    }
+
+    /* ========== BACK ========== */
+    .card-back {
+      background: var(--beige-1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+    }
+
+    .card-back .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .card-back .contact-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-back .contact-icon {
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-back .contact-icon svg {
+      width: 100%;
+      height: 100%;
+      fill: none;
+      stroke: var(--beige-4);
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .card-back .contact-text {
+      font-family: 'Raleway', sans-serif;
+      font-size: 7px;
+      font-weight: 400;
+      color: var(--beige-6);
+      letter-spacing: 0.5px;
+      text-decoration: none;
+    }
+
+    .card-back .qr-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .card-back .qr-wrapper {
+      width: 26mm;
+      height: 26mm;
+      background: white;
+      border-radius: 2px;
+      padding: 2mm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-back .qr-wrapper canvas,
+    .card-back .qr-wrapper img {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .card-back .qr-label {
+      font-family: 'Raleway', sans-serif;
+      font-size: 5.5px;
+      font-weight: 400;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--beige-4);
+    }
+
+    /* ========== PRINT ========== */
+    @media print {
+      body {
+        background: white;
+        gap: 20mm;
+      }
+      h2.label { display: none; }
+      .card { box-shadow: none; border: 0.5px solid #ddd; }
+    }
+  </style>
+</head>
+<body>
+
+  <h2 class="label">Recto</h2>
+  <div class="card card-front">
+    <div class="name">Sofia Mouly</div>
+    <div class="divider"></div>
+    <div class="eyebrow">
+      Actrice Cin&eacute;ma &middot; Publicit&eacute; &middot; TV<br>
+      Com&eacute;dienne Th&eacute;&acirc;tre<br>
+      Doublage &middot; Voice over
+    </div>
+  </div>
+
+  <h2 class="label">Verso</h2>
+  <div class="card card-back">
+    <div class="contact-info">
+
+      <!-- Phone -->
+      <div class="contact-row">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.6.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c1.21.34 2 .57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <span class="contact-text">06 78 37 65 47</span>
+      </div>
+
+      <!-- Email -->
+      <div class="contact-row">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg>
+        </div>
+        <span class="contact-text">mouly.sofia@gmail.com</span>
+      </div>
+
+      <!-- Instagram -->
+      <div class="contact-row">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </div>
+        <span class="contact-text">@sofia.mouly</span>
+      </div>
+
+      <!-- LinkedIn -->
+      <div class="contact-row">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </div>
+        <span class="contact-text">Sofia Mouly</span>
+      </div>
+
+      <!-- Website -->
+      <div class="contact-row">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/></svg>
+        </div>
+        <span class="contact-text">sofiamouly.com</span>
+      </div>
+
+    </div>
+
+    <div class="qr-section">
+      <div class="qr-wrapper" id="qrcode"></div>
+      <span class="qr-label">sofiamouly.com</span>
+    </div>
+  </div>
+
+  <script>
+    new QRCode(document.getElementById("qrcode"), {
+      text: "https://sofiamouly.com",
+      width: 200,
+      height: 200,
+      colorDark: "#1C1712",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  </script>
+</body>
+</html>
